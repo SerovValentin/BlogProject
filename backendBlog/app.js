@@ -12,10 +12,16 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "frontendBlog", "dist")));
 
-app.use("/", routes);
+app.use("/api", routes);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve("..", "frontendBlog", "dist", "index.html"));
+app.get("/*", (req, res) => {
+  try {
+    res.sendFile(
+      path.join(__dirname, "..", "frontendBlog", "dist", "index.html")
+    );
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 mongoose
